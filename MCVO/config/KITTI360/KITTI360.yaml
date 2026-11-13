@@ -9,11 +9,15 @@
 #     LIDAR,
 #     UNKNOWN
 # };
+# None of imu, depth, laser are used at runtime with camera-only KITTI360 config.
+# Paths below assume run_mcvo.sh bind-mounts:
+#   MCVO/        -> /opt/catkin_ws/src/MCVO
+#   outputs/     -> /output
 imu_topic: "/IMU_oxts"
 depth_topic: "/velodyne_points"
 laser_topic: "/velodyne_points"
 odom_topic: "/integrated_to_init"
-output_path: "/home/wang/Documents/MCVO/MCVO_data_test"
+output_path: "/output/"
 
 lio_world_frame: "sensor_init"
 vins_world_frame: "vins_world"
@@ -27,13 +31,14 @@ scale_lidar_absolute_factor: 3
 
 align_camera_lidar_estimation: 0 # align camera and lidar estimation for visualization
 
-sensor_list: ['camera_00', 'camera_02', 'camera_03']
+#> Enforce using all four cameras for the KITTI-360 dataset
+sensor_list: ['camera_00', 'camera_01', 'camera_02', 'camera_03']
 
 camera_00:
   sensor_type: 0
   left_image_topic: "/camera_00"
   frame_id: "camera_00"
-  camera_config_file: "/home/wang/catkin_ws/src/MCVO-main-new/MCVO/config/KITTI360/cameras/camera_00.yaml"
+  camera_config_file: "/opt/catkin_ws/src/MCVO/config/KITTI360/cameras/camera_00.yaml"
   extrinsicRotation_imu_camera: !!opencv-matrix
     rows: 3
     cols: 3
@@ -58,13 +63,13 @@ camera_00:
   show_track: 1           # publish tracking image as topic
   equalize: 1             # if image is too dark or light, trun on equalize to find enough features
   fisheye: 0             # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
-  fisheye_path: "/home/wang/catkin_ws/src/MCVO-main-new/MCVO/config/fisheye_mask.jpg"
+  fisheye_path: "/opt/catkin_ws/src/MCVO/config/fisheye_mask.jpg"
   image_width: 1408
   image_height: 376
   visualize: 1
   Detector_type: 3
   use_vpi: 0
-  SPHORBrootPath: "/home/wang/catkin_ws/src/MCVO-main-new/MCVO/src/Frontend/feature_tracker/SPHORB/" # model path of SPHORB
+  SPHORBrootPath: "/opt/catkin_ws/src/MCVO/src/Frontend/feature_tracker/SPHORB/" # model path of SPHORB
   mirror_parameters:
     xi: 2.2134047507854890e+00
   distortion_parameters:
@@ -83,7 +88,7 @@ camera_01:
   sensor_type: 0
   left_image_topic: "/camera_01"
   frame_id: "camera_01"
-  camera_config_file: "/home/wang/catkin_ws/src/MCVO-main-new/MCVO/config/KITTI360/cameras/camera_01.yaml"
+  camera_config_file: "/opt/catkin_ws/src/MCVO/config/KITTI360/cameras/camera_01.yaml"
   extrinsicRotation_imu_camera: !!opencv-matrix
     rows: 3
     cols: 3
@@ -108,13 +113,13 @@ camera_01:
   show_track: 1           # publish tracking image as topic
   equalize: 1             # if image is too dark or light, trun on equalize to find enough features
   fisheye: 0             # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
-  fisheye_path: "/home/wang/catkin_ws/src/MCVO-main-new/MCVO/config/fisheye_mask.jpg"
+  fisheye_path: "/opt/catkin_ws/src/MCVO/config/fisheye_mask.jpg"
   image_width: 1408
   image_height: 376
   visualize: 1
   Detector_type: 3
   use_vpi: 0
-  SPHORBrootPath: "/home/wang/catkin_ws/src/MCVO-main-new/MCVO/src/Frontend/feature_tracker/SPHORB/" # model path of SPHORB
+  SPHORBrootPath: "/opt/catkin_ws/src/MCVO/src/Frontend/feature_tracker/SPHORB/" # model path of SPHORB
   mirror_parameters:
     xi: 2.2134047507854890e+00
   distortion_parameters:
@@ -133,7 +138,7 @@ camera_02:
   sensor_type: 0
   left_image_topic: "/camera_02"
   frame_id: "camera_02"
-  camera_config_file: "/home/wang/catkin_ws/src/MCVO-main-new/MCVO/config/KITTI360/cameras/camera_02.yaml"
+  camera_config_file: "/opt/catkin_ws/src/MCVO/config/KITTI360/cameras/camera_02.yaml"
   extrinsicRotation_imu_camera: !!opencv-matrix
     rows: 3
     cols: 3
@@ -154,13 +159,13 @@ camera_02:
   show_track: 1           # publish tracking image as topic
   equalize: 1             # if image is too dark or light, trun on equalize to find enough features
   fisheye: 1             # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
-  fisheye_path: "/home/wang/catkin_ws/src/MCVO-main-new/MCVO/config/fisheye_mask_02.png"
+  fisheye_path: "/opt/catkin_ws/src/MCVO/config/fisheye_mask_02.png"
   image_width: 1400
   image_height: 1400
   visualize: 1
   Detector_type: 3
   use_vpi: 0
-  SPHORBrootPath: "/home/wang/catkin_ws/src/MCVO-main-new/MCVO/src/Frontend/feature_tracker/SPHORB/" # model path of SPHORB
+  SPHORBrootPath: "/opt/catkin_ws/src/MCVO/src/Frontend/feature_tracker/SPHORB/" # model path of SPHORB
   mirror_parameters:
     xi: 2.2134047507854890e+00
   distortion_parameters:
@@ -178,7 +183,7 @@ camera_03:
   sensor_type: 0
   left_image_topic: "/camera_03"
   frame_id: "camera_03"
-  camera_config_file: "/home/wang/catkin_ws/src/MCVO-main-new/MCVO/config/KITTI360/cameras/camera_03.yaml"
+  camera_config_file: "/opt/catkin_ws/src/MCVO/config/KITTI360/cameras/camera_03.yaml"
   extrinsicRotation_imu_camera: !!opencv-matrix
     rows: 3
     cols: 3
@@ -200,13 +205,13 @@ camera_03:
   show_track: 1           # publish tracking image as topic
   equalize: 1             # if image is too dark or light, trun on equalize to find enough features
   fisheye: 1             # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
-  fisheye_path: "/home/wang/catkin_ws/src/MCVO-main-new/MCVO/config/fisheye_mask_03.png"
+  fisheye_path: "/opt/catkin_ws/src/MCVO/config/fisheye_mask_03.png"
   image_width: 1400
   image_height: 1400
   visualize: 1
   Detector_type: 3
   use_vpi: 0
-  SPHORBrootPath: "/home/wang/catkin_ws/src/MCVO-main-new/MCVO/src/Frontend/feature_tracker/SPHORB/"
+  SPHORBrootPath: "/opt/catkin_ws/src/MCVO/src/Frontend/feature_tracker/SPHORB/"
   mirror_parameters:
     xi: 2.5535139132482758e+00
   distortion_parameters:
@@ -250,7 +255,7 @@ g_norm: 9.81007       # gravity magnitude
 loop_closure: 1                    # start loop closure
 fast_relocalization: 1             # useful in real-time and large project
 load_previous_pose_graph: 0        # load and reuse previous pose graph; load from 'pose_graph_save_path'
-pose_graph_save_path: "/home/wang/Documents/MCVO/MCVO_data_test" # save and load path
+pose_graph_save_path: "/output/"
 
 #unsynchronization parameters
 estimate_td: 0                      # online estimate time offset between camera and imu
